@@ -1,0 +1,5 @@
+loadFile("TwoTank.mo"); getErrorString();
+cd();
+ok := buildModelFMU(TwoTank, version = "2.0", fmuType = "cs", fileNamePrefix = "TwoTank", platforms = {"dynamic"});
+print("ok=" + String(ok) + "\n");
+getErrorString();

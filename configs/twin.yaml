@@ -1,0 +1,71 @@
+# ---------------------------------------------------------------------------
+# Hybrid AI-Quantum Cognitive Security Framework Phase 1 - digital-twin configuration
+# Single source of truth for plant parameters, Modbus map and timing.
+# Version-controlled: any change to this file changes the experiment.
+# ---------------------------------------------------------------------------
+run:
+  engine: fmu              # fmu | python   (python = SciPy-free RK4 fallback)
+  fmu_path: edge/twin/TwoTank.fmu
+  dt: 0.1                  # simulation / co-simulation step, seconds
+  realtime_factor: 1.0     # 1.0 = wall-clock real time; 60 = 60x faster
+  duration: 0              # seconds; 0 = run until interrupted
+  seed: 42
+
+# Plant parameters - MUST match TwoTank.mo. Used by the python engine and by
+# the analytic checks in scripts/verify_phase1.py.
+plant:
+  A1: 0.0154
+  A2: 0.0154
+  Cv12: 1.2e-5
+  Cv2o: 1.2e-5
+  Qpump: 6.0e-5
+  g: 9.81
+  h1_0: 0.30
+  h2_0: 0.30
+  h_max: 0.60              # physical tank height, used for overflow clamping
+
+# Sensor model. Noise makes the benign baseline realistic; without it the
+# physics residual is degenerate and RO1/PN-Fusion become trivial.
+sensors:
+  level_noise_std: 0.0015  # metres (1.5 mm), Gaussian
+  flow_noise_std: 0.0      # m3/s
+  quantisation_mm: 1       # level transducer resolution
+
+# Modbus TCP slave exposed by the twin; OpenPLC polls this as a slave device.
+modbus:
+  host: 0.0.0.0
+  port: 5020
+  unit_id: 1
+  # Input registers (read-only for the PLC) -> OpenPLC %IW100 .. %IW104
+  input_registers:
+    0: h1_mm                 # tank 1 level, millimetres
+    1: h2_mm                 # tank 2 level, millimetres
+    2: q_in_clpm             # pump inflow, centilitres per minute
+    3: q12_clpm              # V12 flow,    centilitres per minute
+    4: q_out_clpm            # outlet flow, centilitres per minute
+  # Coils (written by the PLC) -> OpenPLC %QX100.0 .. %QX100.2
+  coils:
+    0: pump                  # %QX100.0
+    1: valve_v12             # %QX100.1
+    2: alarm                 # %QX100.2
+  # Initial coil state used before the PLC connects (valve normally open).
+  coil_defaults: [0, 1, 0]
+
+# Control set-points. Mirrored in edge/plc/two_tank.st - keep the two in step.
+control:
+  sp_low_mm: 250
+  sp_high_mm: 350
+  hh_limit_mm: 550
+  scan_ms: 100
+
+mqtt:
+  host: localhost
+  port: 1883
+  topic: cps/edge/plant1/telemetry
+  publish_hz: 1.0
+  qos: 0
+  client_id: edge-publisher-1
+
+storage:
+  baseline_dir: data/raw/baseline
+  rotate_minutes: 60

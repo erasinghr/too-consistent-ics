@@ -1,0 +1,17 @@
+services:
+  openplc:
+    build:
+      context: ./OpenPLC_v3
+      dockerfile: Dockerfile
+    image: cps-factory/openplc:v3
+    container_name: cps-openplc
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+      - "502:502"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ../edge/plc:/programs:ro

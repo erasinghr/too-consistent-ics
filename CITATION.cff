@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this code or the dataset, please cite the paper and the Zenodo record."
+title: "Too Consistent to Be Real: code for the two-sided residual test and the paired process-network dataset"
+type: software
+version: "1.0"
+license: MIT
+authors:
+  - family-names: Singh
+    given-names: Abhinav
+    affiliation: "School of Physical Sciences, Banasthali Vidyapith, Rajasthan, India"
+repository-code: "https://github.com/erasinghr/too-consistent-ics"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24222734"
+    description: "Dataset on Zenodo"
+keywords:
+  - industrial control system
+  - physics-based anomaly detection
+  - false data injection
+  - covert attack
+  - digital twin
+  - network intrusion detection
+preferred-citation:
+  type: article
+  title: "Too Consistent to Be Real: A Two-Sided Residual Test for Fabricated Measurements in Industrial Control Systems, with a Paired Process-Network Dataset"
+  authors:
+    - family-names: Singh
+      given-names: Abhinav
+  journal: "International Journal of Critical Infrastructure Protection"
+  status: submitted
+  year: 2026

@@ -1,0 +1,149 @@
+{
+  "step": "phase2 2.3b network-only arm (Arm N)",
+  "created_utc": "2026-10-23T14:13:15+00:00",
+  "git_head": "aecff2f",
+  "pcap": "data/raw/pcap/benign_20260902T005748Z.pcap",
+  "pcap_md5": "4abc98e2813105b6e6a155a44093fe71",
+  "roles": {
+    "pub": [
+      "127.0.0.1:55022->5020"
+    ],
+    "plc": [
+      "127.0.0.1:54210->5020"
+    ],
+    "mqtt_sub": [
+      "127.0.0.1:57657->1883",
+      "127.0.0.1:40602->1883",
+      "127.0.0.1:42770->1883"
+    ],
+    "mqtt_pub": [
+      "127.0.0.1:37535->1883"
+    ]
+  },
+  "steady_state": [
+    "2026-09-02T01:00:37+00:00",
+    "2026-09-03T00:58:20+00:00"
+  ],
+  "split": "2026-09-02T12:58:37+00:00",
+  "params": {
+    "far_per_day": 1.0,
+    "block_s": 60,
+    "share": 0.25,
+    "p_block": 0.00017361111111111112,
+    "tail": "exponential fitted to top 10 % of calibration |z|"
+  },
+  "whitelist": {
+    "plc": [
+      [
+        15,
+        0,
+        3,
+        1
+      ],
+      [
+        4,
+        0,
+        5,
+        1
+      ]
+    ],
+    "pub": [
+      [
+        1,
+        0,
+        3,
+        1
+      ],
+      [
+        4,
+        0,
+        5,
+        1
+      ]
+    ]
+  },
+  "fits": {
+    "plc.lat": {
+      "median": 0.19371509552001953,
+      "scale": 0.00406501293182373,
+      "u90": 2.903242834268823,
+      "tail_sigma": 1.0981341194421623,
+      "tau": 9.883101523326689,
+      "cal_max_z": 6.686256224376684,
+      "cal_blocks": 718
+    },
+    "plc.gap": {
+      "median": 103.47410542750102,
+      "scale": 0.029558196825833848,
+      "u90": 19.59986281995915,
+      "tail_sigma": 1.7936934279101087,
+      "tau": 31.000771358038463,
+      "cal_max_z": 24.791489017926814,
+      "cal_blocks": 718
+    },
+    "plc.jit": {
+      "median": 0.8770585060119629,
+      "scale": 0.06428022623062134,
+      "u90": 3.418075113531242,
+      "tail_sigma": 1.3373495257437515,
+      "tau": 11.91841267913912,
+      "cal_max_z": 8.70977688172073,
+      "cal_blocks": 718
+    },
+    "pub.lat": {
+      "median": 0.30225515365600586,
+      "scale": 0.003976643085479736,
+      "u90": 5.32098265809314,
+      "tail_sigma": 2.8571386349784778,
+      "tau": 23.481263423550043,
+      "cal_max_z": 15.783083771752327,
+      "cal_blocks": 718
+    }
+  },
+  "results": {
+    "calibration": {
+      "hours": 11.967,
+      "episodes": 0,
+      "expected": 0.499,
+      "ci95": [
+        0.0,
+        3.67
+      ],
+      "verdict": "consistent",
+      "by_component": {
+        "plc.lat": 0,
+        "plc.gap": 0,
+        "plc.jit": 0,
+        "pub.lat": 0,
+        "SYN": 0,
+        "END": 0,
+        "WL": 0,
+        "EXC": 0,
+        "UNM": 0
+      },
+      "zero_cost_events": []
+    },
+    "held_out": {
+      "hours": 11.983,
+      "episodes": 0,
+      "expected": 0.499,
+      "ci95": [
+        0.0,
+        3.67
+      ],
+      "verdict": "consistent",
+      "by_component": {
+        "plc.lat": 0,
+        "plc.gap": 0,
+        "plc.jit": 0,
+        "pub.lat": 0,
+        "SYN": 0,
+        "END": 0,
+        "WL": 0,
+        "EXC": 0,
+        "UNM": 0
+      },
+      "zero_cost_events": []
+    }
+  }
+}

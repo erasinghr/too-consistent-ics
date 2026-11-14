@@ -1,0 +1,107 @@
+{
+  "utc": "2026-09-03T01:14:14.808882+00:00",
+  "config": "configs/twin.yaml",
+  "checks": [
+    {
+      "id": "A1",
+      "check": "Modelica plant model present",
+      "pass": true,
+      "detail": "/home/abhinav/cps-factory/edge/twin/TwoTank.mo",
+      "critical": true
+    },
+    {
+      "id": "A2",
+      "check": "FMU exported",
+      "pass": true,
+      "detail": "/home/abhinav/cps-factory/edge/twin/TwoTank.fmu",
+      "critical": false
+    },
+    {
+      "id": "A3",
+      "check": "PLC Structured Text present",
+      "pass": true,
+      "detail": "/home/abhinav/cps-factory/edge/plc/two_tank.st",
+      "critical": true
+    },
+    {
+      "id": "L1",
+      "check": "twin reachable on Modbus/TCP",
+      "pass": true,
+      "detail": "127.0.0.1:5020",
+      "critical": true
+    },
+    {
+      "id": "L2",
+      "check": "levels are evolving (plant is running)",
+      "pass": true,
+      "detail": "h1 range 250-287 mm over 100 samples",
+      "critical": true
+    },
+    {
+      "id": "L3",
+      "check": "control loop is closed (pump modulating)",
+      "pass": true,
+      "detail": "pump duty 4.0% over 20s",
+      "critical": true
+    },
+    {
+      "id": "L4",
+      "check": "tank 1 held inside the control band",
+      "pass": true,
+      "detail": "band 250-350 mm (+/-60 mm tol)",
+      "critical": true
+    },
+    {
+      "id": "L5",
+      "check": "MQTT telemetry arriving at the fog tier",
+      "pass": true,
+      "detail": "11 frames in 10s (expected ~10); schema complete",
+      "critical": true
+    },
+    {
+      "id": "P1",
+      "check": "physics matches closed-form equilibrium h2* = (Cv12/Cv2o)^2 h1",
+      "pass": true,
+      "detail": "[recorded baseline] h1_mean=0.300 m, h2_mean=0.299 m, predicted=0.300 m, error=0.2%",
+      "critical": true
+    },
+    {
+      "id": "H1",
+      "check": "benign baseline captured",
+      "pass": true,
+      "detail": "25 file(s) in /home/abhinav/cps-factory/data/raw/baseline",
+      "critical": true
+    },
+    {
+      "id": "H2",
+      "check": "baseline covers at least 24 h of process time",
+      "pass": true,
+      "detail": "86,372 rows spanning 24.02 h",
+      "critical": true
+    },
+    {
+      "id": "H3",
+      "check": "no malformed rows",
+      "pass": true,
+      "detail": "0 malformed",
+      "critical": true
+    },
+    {
+      "id": "H4",
+      "check": "data-version-control initialised",
+      "pass": true,
+      "detail": "/home/abhinav/cps-factory/.dvc present",
+      "critical": false
+    },
+    {
+      "id": "H5",
+      "check": "baseline dataset tracked by DVC",
+      "pass": true,
+      "detail": "baseline_v1.parquet.dvc",
+      "critical": false
+    }
+  ],
+  "failed": 0,
+  "warnings": 0,
+  "verdict": "PASS"
+}

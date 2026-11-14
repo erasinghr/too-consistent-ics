@@ -1,0 +1,228 @@
+{
+  "step": "phase2 2.1 physics-arm thresholds (null-model calibrated, benign-validated)",
+  "created_utc": "2026-09-23T15:03:29+00:00",
+  "git_head": "04fcd4d",
+  "parquet": "data/processed/baseline_v1.parquet",
+  "parquet_md5": "b0b6750fd4e289d8dac314df9fb420a8",
+  "rows_closed_loop": 86298,
+  "masked_rows": 6966,
+  "pump_switches": 1741,
+  "pump_step_mm_s": 3.8961,
+  "pump_step_source": "median jump of the tank-1 model term at pump switches",
+  "null_model": {
+    "sigma_sensor_mm": 1.5,
+    "quantum_mm": 1.0,
+    "dt_s": 1.0,
+    "sigma0_mm_s": 1.0801,
+    "mc_days": 200,
+    "seed": 20260923,
+    "switch_timing": "tank 1 only: f ~ U(0,1) inside the sample interval",
+    "quantiles": {
+      "cusum": [
+        0.0,
+        0.0,
+        0.0,
+        0.52856,
+        1.65064,
+        2.83751,
+        3.84111
+      ],
+      "Q": [
+        0.44639,
+        0.55043,
+        0.72045,
+        0.98048,
+        1.30471,
+        1.62381,
+        1.88855
+      ],
+      "P": [
+        0.00012,
+        0.00122,
+        0.01224,
+        0.06553,
+        0.15946,
+        0.25755,
+        0.3446
+      ],
+      "M res1": [
+        1e-05,
+        0.00012,
+        0.00124,
+        0.00665,
+        0.01607,
+        0.02472,
+        0.03092
+      ],
+      "M res2": [
+        1e-05,
+        6e-05,
+        0.00059,
+        0.00318,
+        0.00776,
+        0.01214,
+        0.01552
+      ]
+    }
+  },
+  "params": {
+    "far_per_day": 1.0,
+    "window": 60,
+    "mean_window": 300,
+    "k": 0.5,
+    "gap": 60,
+    "mask_pad": 1,
+    "budget_share_per_tank": {
+      "A_cusum": 0.25,
+      "A_mean": 0.25,
+      "B_cusum": 0.125,
+      "B_mean": 0.125,
+      "B_var": 0.125,
+      "B_acf": 0.125
+    }
+  },
+  "thresholds": {
+    "A_cusum": 6.07087,
+    "B_cusum": 6.44602,
+    "B_var": 0.31361,
+    "B_acf": 0.50412
+  },
+  "per_tank": {
+    "res1": {
+      "sigma_measured_mm_s": 1.0824,
+      "sigma_predicted_mm_s": 1.0801,
+      "acf_lag2_measured": -0.5017,
+      "off_lattice_samples": 0,
+      "quantiles_benign": {
+        "cusum": [
+          0.0,
+          0.0,
+          0.0,
+          0.5108,
+          1.6768,
+          2.8384,
+          3.8909
+        ],
+        "Q": [
+          0.4408,
+          0.5393,
+          0.711,
+          0.9847,
+          1.3186,
+          1.652,
+          1.9308
+        ],
+        "P": [
+          0.0001,
+          0.0012,
+          0.012,
+          0.0643,
+          0.1599,
+          0.2605,
+          0.341
+        ],
+        "M": [
+          1e-05,
+          0.00013,
+          0.00129,
+          0.00688,
+          0.01614,
+          0.02443,
+          0.03007
+        ]
+      },
+      "thresholds_mean": {
+        "A_mean": 0.041464,
+        "B_mean": 0.042503
+      },
+      "episodes": {
+        "A_cusum": 0,
+        "A_mean": 0,
+        "B_cusum": 0,
+        "B_mean": 0,
+        "B_var": 0,
+        "B_acf": 0,
+        "B_lattice": 0
+      }
+    },
+    "res2": {
+      "sigma_measured_mm_s": 1.0768,
+      "sigma_predicted_mm_s": 1.0801,
+      "acf_lag2_measured": -0.4983,
+      "off_lattice_samples": 0,
+      "quantiles_benign": {
+        "cusum": [
+          0.0,
+          0.0,
+          0.0,
+          0.496,
+          1.6645,
+          2.836,
+          3.8697
+        ],
+        "Q": [
+          0.4374,
+          0.5468,
+          0.7164,
+          0.9745,
+          1.2917,
+          1.6008,
+          1.9361
+        ],
+        "P": [
+          0.0001,
+          0.0012,
+          0.012,
+          0.0653,
+          0.1574,
+          0.2533,
+          0.3506
+        ],
+        "M": [
+          1e-05,
+          6e-05,
+          0.00061,
+          0.00326,
+          0.00795,
+          0.01246,
+          0.0159
+        ]
+      },
+      "thresholds_mean": {
+        "A_mean": 0.021922,
+        "B_mean": 0.022626
+      },
+      "episodes": {
+        "A_cusum": 0,
+        "A_mean": 0,
+        "B_cusum": 0,
+        "B_mean": 0,
+        "B_var": 0,
+        "B_acf": 0,
+        "B_lattice": 0
+      }
+    }
+  },
+  "false_alarms_benign": {
+    "A": {
+      "episodes": 0,
+      "per_24h": 0.0,
+      "ci95_count": [
+        0.0,
+        3.67
+      ],
+      "expected": 0.999,
+      "verdict": "consistent"
+    },
+    "B": {
+      "episodes": 0,
+      "per_24h": 0.0,
+      "ci95_count": [
+        0.0,
+        3.67
+      ],
+      "expected": 0.999,
+      "verdict": "consistent"
+    }
+  }
+}

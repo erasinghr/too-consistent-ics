@@ -1,0 +1,12 @@
+# Phase 1 additions to the Phase 0 environment (conda env: cps, Python 3.11).
+# Exact pins - reproducibility is a requirement, not a preference.
+fmpy==0.3.21
+pymodbus==3.6.9
+paho-mqtt==2.1.0
+PyYAML==6.0.1
+pandas==2.2.2
+numpy==1.26.4
+pyarrow==15.0.2
+matplotlib==3.8.4
+influxdb-client==1.43.0
+setuptools<81

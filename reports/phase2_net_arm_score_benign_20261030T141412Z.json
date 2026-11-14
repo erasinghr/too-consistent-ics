@@ -1,0 +1,62 @@
+{
+  "pcap": "data/raw/pcap_attack/benign_20261030T141412Z.pcap",
+  "calibration": "reports/phase2_net_arm_calibration.json",
+  "steady_state": [
+    "2026-10-30T14:15:28+00:00",
+    "2026-10-30T14:27:44+00:00"
+  ],
+  "episodes": 1,
+  "alarm_blocks": [
+    "2026-10-30T14:15:28+00:00",
+    "2026-10-30T14:16:28+00:00",
+    "2026-10-30T14:17:28+00:00",
+    "2026-10-30T14:18:28+00:00",
+    "2026-10-30T14:19:28+00:00",
+    "2026-10-30T14:20:28+00:00",
+    "2026-10-30T14:21:28+00:00",
+    "2026-10-30T14:22:28+00:00",
+    "2026-10-30T14:23:28+00:00",
+    "2026-10-30T14:24:28+00:00",
+    "2026-10-30T14:25:28+00:00",
+    "2026-10-30T14:26:28+00:00"
+  ],
+  "by_component": {
+    "plc.lat": {
+      "episodes": 1,
+      "first": "2026-10-30T14:15:28+00:00"
+    },
+    "plc.gap": {
+      "episodes": 2,
+      "first": "2026-10-30T14:15:28+00:00"
+    },
+    "plc.jit": {
+      "episodes": 1,
+      "first": "2026-10-30T14:15:28+00:00"
+    },
+    "pub.lat": {
+      "episodes": 1,
+      "first": "2026-10-30T14:15:28+00:00"
+    },
+    "SYN": {
+      "episodes": 0,
+      "first": null
+    },
+    "END": {
+      "episodes": 0,
+      "first": null
+    },
+    "WL": {
+      "episodes": 0,
+      "first": null
+    },
+    "EXC": {
+      "episodes": 0,
+      "first": null
+    },
+    "UNM": {
+      "episodes": 0,
+      "first": null
+    }
+  },
+  "zero_cost_events": []
+}

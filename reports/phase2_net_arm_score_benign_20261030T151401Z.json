@@ -1,0 +1,51 @@
+{
+  "pcap": "data/raw/pcap_benign_ctrl/benign_20261030T151401Z.pcap",
+  "calibration": "reports/phase2_net_arm_calibration.json",
+  "steady_state": [
+    "2026-10-30T15:15:02+00:00",
+    "2026-10-30T15:16:58+00:00"
+  ],
+  "episodes": 1,
+  "alarm_blocks": [
+    "2026-10-30T15:15:02+00:00"
+  ],
+  "by_component": {
+    "plc.lat": {
+      "episodes": 0,
+      "first": null
+    },
+    "plc.gap": {
+      "episodes": 0,
+      "first": null
+    },
+    "plc.jit": {
+      "episodes": 1,
+      "first": "2026-10-30T15:15:02+00:00"
+    },
+    "pub.lat": {
+      "episodes": 0,
+      "first": null
+    },
+    "SYN": {
+      "episodes": 0,
+      "first": null
+    },
+    "END": {
+      "episodes": 0,
+      "first": null
+    },
+    "WL": {
+      "episodes": 0,
+      "first": null
+    },
+    "EXC": {
+      "episodes": 0,
+      "first": null
+    },
+    "UNM": {
+      "episodes": 0,
+      "first": null
+    }
+  },
+  "zero_cost_events": []
+}

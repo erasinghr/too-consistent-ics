@@ -1,0 +1,12 @@
+# data come from Zenodo, not Git
+data/
+edge/twin/TwoTank.fmu
+edge/twin/*.json
+edge/twin/*.log
+edge/twin/*.libs
+edge/twin/*.makefile
+edge/twin/.fmutmp/
+logs/
+__pycache__/
+*.pyc
+configs/_attack_*.yaml
