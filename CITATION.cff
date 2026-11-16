@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this code or the dataset, please cite the paper and the Zenodo record."
 title: "Too Consistent to Be Real: code for the two-sided residual test and the paired process-network dataset"
 type: software
-version: "1.0"
+version: "1.1"
 license: MIT
 authors:
   - family-names: Singh
@@ -26,6 +26,8 @@ preferred-citation:
   authors:
     - family-names: Singh
       given-names: Abhinav
+    - family-names: Prakash
+      given-names: Vivek
   journal: "International Journal of Critical Infrastructure Protection"
   status: submitted
   year: 2026

@@ -103,7 +103,7 @@ orjson==3.11.9
 packaging==24.2
 paho-mqtt==2.1.0
 pandas==2.2.2
-pathspec==1.1.1
+pathspec==0.11.2
 pillow==12.3.0
 platformdirs==3.11.0
 prometheus_client==0.20.0
@@ -161,4 +161,3 @@ Werkzeug==3.1.8
 yarl==1.24.5
 zc.lockfile==4.0
 zipp==4.1.0
-pathspec<0.12

@@ -2,11 +2,13 @@
 
 This repository holds the code, configuration and calibration reports behind the paper
 
-> A. Singh, *Too Consistent to Be Real: A Two-Sided Residual Test for Fabricated Measurements in Industrial Control Systems, with a Paired Process–Network Dataset*, submitted to the International Journal of Critical Infrastructure Protection (2026).
+> A. Singh, V. Prakash, *Too Consistent to Be Real: A Two-Sided Residual Test for Fabricated Measurements in Industrial Control Systems, with a Paired Process–Network Dataset*, submitted to the International Journal of Critical Infrastructure Protection (2026).
 
 The data (telemetry, packet captures, true-plant logs and the built plant model) are archived separately on Zenodo: **https://doi.org/10.5281/zenodo.24222734**.
 
 It is an export of tag `paper1-ijcip-v1.0` (commit `ba0a1c1a78022cffa54e0a908fa1b955808dd501`) of the author's working repository, reduced to what the paper needs.
+
+Release v1.1 adds the replay check reported in Section 8 of the paper (`scripts/phase3_attack_classes.py` and two report files, from commit `7db1eec5da5c9e55fbe8023bff26e831965eb7e6` of the same repository) and removes a duplicated `pathspec` pin from `requirements.txt`. Nothing else changed.
 
 ## What the testbed is
 
@@ -21,7 +23,7 @@ A two-tank gravity-drained level-control process with first-principles dynamics,
 | `edge/publisher/` | `mqtt_publisher.py` (1 Hz Modbus poll, MQTT publication) |
 | `fog/ingest/` | `baseline_recorder.py` (MQTT subscriber, rotated files with SHA-256 manifest) |
 | `configs/twin.yaml` | single source of truth for plant parameters, set-points, Modbus map, timing and storage paths |
-| `scripts/` | capture, dataset build and verification (Phase 1); residual floor, simulator, physics arms, attack ladder, network arm, live injector and scorers (Phase 2) |
+| `scripts/` | capture, dataset build and verification (Phase 1); residual floor, simulator, physics arms, attack ladder, network arm, live injector and scorers (Phase 2); replay check (Section 8) |
 | `reports/` | JSON outputs behind the paper's tables (see below) |
 | `docker-compose.yml`, `infra/` | broker and supporting services |
 | `requirements*.txt`, `docs/versions_phase1.txt` | pinned Python dependencies and recorded tool versions |
@@ -60,6 +62,7 @@ sha256sum -c SHA256SUMS.txt       # run in the folder holding the downloaded fil
 | 9 | `python scripts/phase2_pcap_inventory.py`; `python scripts/phase2_net_arm.py` | capture inventory and network-arm calibration |
 | 10 | `./scripts/run_attack.sh` with `phase2_live_inject.py` and `phase2_truth_logger.py` | a live attack run: telemetry, packet capture and true-plant log |
 | 11 | `python scripts/phase2_score_live.py`; `python scripts/phase2_net_arm.py --score`; `python scripts/phase2_net_arm_blocks.py` | live scores and the per-block attribution control |
+| 12 | `python scripts/phase3_attack_classes.py`; `python scripts/phase3_attack_classes.py --classes P3-null --runs 100 --out reports/phase3_null_control.json` | replay check and its no-attack control, seed base 20261116 (Section 8) |
 
 Each script documents its options (`--help`, or the header of the shell scripts). Three cautions:
 
@@ -78,6 +81,8 @@ Each script documents its options (`--help`, or the header of the shell scripts)
 | `reports/phase2_pcap_inventory.json` | connections, function codes and timing of the benign capture |
 | `reports/phase2_net_arm_calibration.json` | network-arm thresholds |
 | `reports/phase2_net_arm_score_*.json`, `reports/phase2_net_arm_blocks.json` | network-arm scores on the live run and the attribution controls |
+| `reports/phase3_attack_classes.json` | the replay check of Section 8 (the replay classes; freeze and scale runs from the same script are not reported in the paper) |
+| `reports/phase3_null_control.json` | its no-attack control under the same protocol |
 | `reports/phase2_physics_arms_calibration.json` | an earlier calibration step, superseded by `phase2_detector_calibration.json` (as is `scripts/phase2_calibrate_physics_arms.py`) |
 
 ## Licence and citation
