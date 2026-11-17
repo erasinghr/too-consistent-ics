@@ -1,0 +1,460 @@
+{
+  "datacard": {
+    "name": "phase3_corpus_v1",
+    "created_utc": "2026-11-17T13:06:18+00:00",
+    "phase": 3,
+    "step": "3.1b",
+    "git_head": "7db1eec",
+    "config": "configs/twin.yaml",
+    "config_md5": "68f99cc95646dfa43a75a284f6917fd6",
+    "detector": "reports/phase2_detector_calibration.json",
+    "detector_md5": "ee9dc3af8a77c8512d9fcfaaf4fb6dc9",
+    "protocol": {
+      "runs_per_phase": 40,
+      "onset_phases": [
+        "ON",
+        "OFF"
+      ],
+      "arming_s": [
+        600,
+        900
+      ],
+      "horizon_s": 3600,
+      "record_s": 4620,
+      "seed_attack": "202611170 + 1000 * rung index + phase index (0 ON, 1 OFF); arming rng seed + 7; split rng seed + 11",
+      "benign_days": 20,
+      "seed_benign": 909111700
+    },
+    "rungs": {
+      "R0-step": {
+        "family": "step",
+        "spec": {
+          "kind": "bias",
+          "step_mm": 20.0,
+          "rate": 0.0,
+          "cap_mm": 20.0
+        },
+        "origin": "phase2"
+      },
+      "R1-drift": {
+        "family": "ramp",
+        "spec": {
+          "kind": "bias",
+          "step_mm": 0.0,
+          "rate": 0.2,
+          "cap_mm": 300.0
+        },
+        "origin": "phase2"
+      },
+      "R1-creep": {
+        "family": "ramp",
+        "spec": {
+          "kind": "bias",
+          "step_mm": 0.0,
+          "rate": 0.01,
+          "cap_mm": 300.0
+        },
+        "origin": "phase2"
+      },
+      "R2-fab-clean": {
+        "family": "fab_clean",
+        "spec": {
+          "kind": "fabricate",
+          "noise": false,
+          "force": 1.0
+        },
+        "origin": "phase2"
+      },
+      "R2-fab-clean-drain": {
+        "family": "fab_clean",
+        "spec": {
+          "kind": "fabricate",
+          "noise": false,
+          "force": 0.0
+        },
+        "origin": "phase2"
+      },
+      "R3-fab-matched": {
+        "family": "fab_matched",
+        "spec": {
+          "kind": "fabricate",
+          "noise": true,
+          "force": 1.0
+        },
+        "origin": "phase2"
+      },
+      "R3-fab-matched-drain": {
+        "family": "fab_matched",
+        "spec": {
+          "kind": "fabricate",
+          "noise": true,
+          "force": 0.0
+        },
+        "origin": "phase2"
+      },
+      "P3-freeze": {
+        "family": "freeze",
+        "spec": {
+          "kind": "freeze"
+        },
+        "origin": "phase3"
+      },
+      "P3-scale": {
+        "family": "scale",
+        "spec": {
+          "kind": "scale",
+          "k_final": 0.6,
+          "ramp_s": 600.0
+        },
+        "origin": "phase3"
+      },
+      "P3-replay": {
+        "family": "replay",
+        "spec": {
+          "kind": "replay",
+          "force": 1.0,
+          "min_seg_s": 60.0
+        },
+        "origin": "phase3"
+      },
+      "P3-replay-drain": {
+        "family": "replay",
+        "spec": {
+          "kind": "replay",
+          "force": 0.0,
+          "min_seg_s": 60.0
+        },
+        "origin": "phase3"
+      }
+    },
+    "covert_families": [
+      "fab_matched",
+      "replay"
+    ],
+    "split": {
+      "fractions": {
+        "train": 0.6,
+        "val": 0.2,
+        "test": 0.2
+      },
+      "unit": "run (attack runs within rung x onset phase; benign by day)"
+    },
+    "rows": {
+      "telemetry": 5793600,
+      "runs": 900,
+      "attack_runs": 880,
+      "benign_days": 20
+    },
+    "schema": {
+      "telemetry": {
+        "run_id": "int32",
+        "t": "int32",
+        "active": "int8",
+        "h1_mm": "int16",
+        "h2_mm": "int16",
+        "q_in_clpm": "int16",
+        "q12_clpm": "int16",
+        "q_out_clpm": "int16",
+        "pump": "int8",
+        "alarm": "int8",
+        "pump_applied": "int8",
+        "h1_true": "float",
+        "h2_true": "float"
+      },
+      "runs": {
+        "run_id": "int64",
+        "kind": "object",
+        "rung": "object",
+        "family": "object",
+        "covert_expected": "bool",
+        "origin": "object",
+        "phase": "object",
+        "seed": "int64",
+        "run": "int64",
+        "split": "object",
+        "onset_s": "float64",
+        "harm_metric": "object",
+        "harm_s": "float64",
+        "before_harm_A": "bool",
+        "before_harm_B": "bool",
+        "n_rows": "int64",
+        "phase_at_onset": "float64",
+        "delay_A": "float64",
+        "pre_fa_A": "object",
+        "first_A": "object",
+        "delay_B": "float64",
+        "pre_fa_B": "object",
+        "first_B": "object",
+        "t_HH": "float64",
+        "t_over": "float64",
+        "t_dry": "float64",
+        "out_band_s": "float64",
+        "max_true_h_mm": "float64",
+        "min_true_h1_mm": "float64",
+        "fa_episodes_A": "float64",
+        "fa_episodes_B": "float64",
+        "pump_duty": "float64",
+        "res1_sigma_mm_s": "float64"
+      }
+    },
+    "files": {
+      "telemetry.parquet": {
+        "sha256": "1985aa63a1b385204908ea1ba7b9ab5081ad39bccf6e864ba5035562b36f216d",
+        "bytes": 77186607
+      },
+      "runs.parquet": {
+        "sha256": "8a79893078e76011a70511f6f81b9aab19ff584da6ddd8cde6a652775faf75e7",
+        "bytes": 43891
+      }
+    },
+    "roundtrip": [
+      {
+        "rung": "R0-step",
+        "run_id": 0,
+        "match": true,
+        "delay_A": 1.0,
+        "delay_B": 1.0
+      },
+      {
+        "rung": "R1-drift",
+        "run_id": 80,
+        "match": true,
+        "delay_A": 29.0,
+        "delay_B": 29.0
+      },
+      {
+        "rung": "R1-creep",
+        "run_id": 160,
+        "match": true,
+        "delay_A": 124.0,
+        "delay_B": 126.0
+      },
+      {
+        "rung": "R2-fab-clean",
+        "run_id": 240,
+        "match": true,
+        "delay_A": Infinity,
+        "delay_B": 43.0
+      },
+      {
+        "rung": "R2-fab-clean-drain",
+        "run_id": 320,
+        "match": true,
+        "delay_A": Infinity,
+        "delay_B": 48.0
+      },
+      {
+        "rung": "R3-fab-matched",
+        "run_id": 400,
+        "match": true,
+        "delay_A": Infinity,
+        "delay_B": Infinity
+      },
+      {
+        "rung": "R3-fab-matched-drain",
+        "run_id": 480,
+        "match": true,
+        "delay_A": Infinity,
+        "delay_B": Infinity
+      },
+      {
+        "rung": "P3-freeze",
+        "run_id": 560,
+        "match": true,
+        "delay_A": 5.0,
+        "delay_B": 6.0
+      },
+      {
+        "rung": "P3-scale",
+        "run_id": 640,
+        "match": true,
+        "delay_A": 30.0,
+        "delay_B": 30.0
+      },
+      {
+        "rung": "P3-replay",
+        "run_id": 720,
+        "match": true,
+        "delay_A": Infinity,
+        "delay_B": Infinity
+      },
+      {
+        "rung": "P3-replay-drain",
+        "run_id": 800,
+        "match": true,
+        "delay_A": Infinity,
+        "delay_B": Infinity
+      }
+    ],
+    "intended_use": [
+      "3.2-3.5 generator training and C2ST reference (train/val runs)",
+      "3.6 leave-one-attack-out evaluation (test runs), physics arms as comparator"
+    ],
+    "limitations": [
+      "all runs simulated (phase2_sim, validated against the released day on 29 statistics); the three tank-2 features of the real stack the simulator lacks are absent",
+      "source spoofs only; one operating point and set-point pair",
+      "no network data: the corpus covers the telemetry channel only"
+    ]
+  },
+  "per_rung": {
+    "R0-step": {
+      "family": "step",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 80,
+      "detected_B": 80,
+      "before_harm_A": 80,
+      "before_harm_B": 80,
+      "median_delay_B_s": 1.0
+    },
+    "R1-drift": {
+      "family": "ramp",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 80,
+      "detected_B": 80,
+      "before_harm_A": 80,
+      "before_harm_B": 80,
+      "median_delay_B_s": 27.0
+    },
+    "R1-creep": {
+      "family": "ramp",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 80,
+      "detected_B": 80,
+      "before_harm_A": 80,
+      "before_harm_B": 80,
+      "median_delay_B_s": 126.0
+    },
+    "R2-fab-clean": {
+      "family": "fab_clean",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 0,
+      "detected_B": 80,
+      "before_harm_A": 0,
+      "before_harm_B": 80,
+      "median_delay_B_s": 37.0
+    },
+    "R2-fab-clean-drain": {
+      "family": "fab_clean",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 0,
+      "detected_B": 80,
+      "before_harm_A": 0,
+      "before_harm_B": 80,
+      "median_delay_B_s": 39.0
+    },
+    "R3-fab-matched": {
+      "family": "fab_matched",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 5,
+      "detected_B": 3,
+      "before_harm_A": 0,
+      "before_harm_B": 0,
+      "median_delay_B_s": 2075.0
+    },
+    "R3-fab-matched-drain": {
+      "family": "fab_matched",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 6,
+      "detected_B": 4,
+      "before_harm_A": 0,
+      "before_harm_B": 0,
+      "median_delay_B_s": 2501.0
+    },
+    "P3-freeze": {
+      "family": "freeze",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 80,
+      "detected_B": 80,
+      "before_harm_A": 80,
+      "before_harm_B": 80,
+      "median_delay_B_s": 6.0
+    },
+    "P3-scale": {
+      "family": "scale",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 80,
+      "detected_B": 80,
+      "before_harm_A": 80,
+      "before_harm_B": 80,
+      "median_delay_B_s": 28.0
+    },
+    "P3-replay": {
+      "family": "replay",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 12,
+      "detected_B": 10,
+      "before_harm_A": 1,
+      "before_harm_B": 1,
+      "median_delay_B_s": 1651.5
+    },
+    "P3-replay-drain": {
+      "family": "replay",
+      "runs": 80,
+      "split": {
+        "train": 48,
+        "val": 16,
+        "test": 16
+      },
+      "detected_A": 6,
+      "detected_B": 5,
+      "before_harm_A": 0,
+      "before_harm_B": 0,
+      "median_delay_B_s": 2166.0
+    }
+  },
+  "benign": {
+    "days": 20,
+    "fa_episodes_A": 19,
+    "fa_episodes_B": 19
+  }
+}

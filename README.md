@@ -10,6 +10,8 @@ It is an export of tag `paper1-ijcip-v1.0` (commit `ba0a1c1a78022cffa54e0a908fa1
 
 Release v1.1 adds the replay check reported in Section 8 of the paper (`scripts/phase3_attack_classes.py` and two report files, from commit `7db1eec5da5c9e55fbe8023bff26e831965eb7e6` of the same repository) and removes a duplicated `pathspec` pin from `requirements.txt`. Nothing else changed.
 
+Release v1.2 adds the independent replication of the replay check and its splice-time diagnostic reported in Section 8 (`scripts/phase3_corpus.py`, `scripts/phase3_replay_seams.py` and two report files, from commit `44b337ea0313937417de78f67f5c57c28b48313e` of the same repository). Nothing else changed.
+
 ## What the testbed is
 
 A two-tank gravity-drained level-control process with first-principles dynamics, written in Modelica and exported as an FMI 2.0 co-simulation unit, runs as a Modbus/TCP slave. An OpenPLC runtime executing an IEC 61131-3 Structured Text program closes the loop on a 100 ms scan. A separate publisher polls the twin at 1 Hz over its own Modbus connection and republishes over MQTT to a recorder, so a packet capture of the Modbus and MQTT ports is a second view of the same activity as the telemetry.
@@ -23,7 +25,7 @@ A two-tank gravity-drained level-control process with first-principles dynamics,
 | `edge/publisher/` | `mqtt_publisher.py` (1 Hz Modbus poll, MQTT publication) |
 | `fog/ingest/` | `baseline_recorder.py` (MQTT subscriber, rotated files with SHA-256 manifest) |
 | `configs/twin.yaml` | single source of truth for plant parameters, set-points, Modbus map, timing and storage paths |
-| `scripts/` | capture, dataset build and verification (Phase 1); residual floor, simulator, physics arms, attack ladder, network arm, live injector and scorers (Phase 2); replay check (Section 8) |
+| `scripts/` | capture, dataset build and verification (Phase 1); residual floor, simulator, physics arms, attack ladder, network arm, live injector and scorers (Phase 2); replay check, its replication and splice-time diagnostic (Section 8) |
 | `reports/` | JSON outputs behind the paper's tables (see below) |
 | `docker-compose.yml`, `infra/` | broker and supporting services |
 | `requirements*.txt`, `docs/versions_phase1.txt` | pinned Python dependencies and recorded tool versions |
@@ -63,6 +65,7 @@ sha256sum -c SHA256SUMS.txt       # run in the folder holding the downloaded fil
 | 10 | `./scripts/run_attack.sh` with `phase2_live_inject.py` and `phase2_truth_logger.py` | a live attack run: telemetry, packet capture and true-plant log |
 | 11 | `python scripts/phase2_score_live.py`; `python scripts/phase2_net_arm.py --score`; `python scripts/phase2_net_arm_blocks.py` | live scores and the per-block attribution control |
 | 12 | `python scripts/phase3_attack_classes.py`; `python scripts/phase3_attack_classes.py --classes P3-null --runs 100 --out reports/phase3_null_control.json` | replay check and its no-attack control, seed base 20261116 (Section 8) |
+| 13 | `python scripts/phase3_corpus.py --build`; `python scripts/phase3_replay_seams.py` | independent replication of the replay check (160 runs, own seeds) and its splice-time diagnostic (Section 8); the build writes `data/processed/phase3_corpus_v1/` and also simulates attack families the paper does not report |
 
 Each script documents its options (`--help`, or the header of the shell scripts). Three cautions:
 
@@ -83,6 +86,8 @@ Each script documents its options (`--help`, or the header of the shell scripts)
 | `reports/phase2_net_arm_score_*.json`, `reports/phase2_net_arm_blocks.json` | network-arm scores on the live run and the attribution controls |
 | `reports/phase3_attack_classes.json` | the replay check of Section 8 (the replay classes; freeze and scale runs from the same script are not reported in the paper) |
 | `reports/phase3_null_control.json` | its no-attack control under the same protocol |
+| `reports/phase3_corpus_v1_summary.json` | the replication sample: per-rung Arm A and Arm B results of the corpus build (Section 8 reports the replay rows) |
+| `reports/phase3_replay_seams.json` | the splice-time diagnostic of the replicated replay runs |
 | `reports/phase2_physics_arms_calibration.json` | an earlier calibration step, superseded by `phase2_detector_calibration.json` (as is `scripts/phase2_calibrate_physics_arms.py`) |
 
 ## Licence and citation
